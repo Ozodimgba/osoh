@@ -1,0 +1,22 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/rpc-codec",
+    "crates/rpc-transport",
+    "crates/rpc-io",
+    "crates/rpc-client",
+    "crates/rpc-server",
+    "crates/geyser-plugin",
+]
+
+[workspace.dependencies]
+# Shared dependencies across all crates
+bincode = "2.0.1"
+io-uring = "0.7.10"
+quinn = "0.11.8"
+serde = "1.0.219"
+tokio = "1.47.1"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
