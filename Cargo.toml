@@ -11,11 +11,18 @@ members = [
 
 [workspace.dependencies]
 # Shared dependencies across all crates
-bincode = "2.0.1"
+bincode = { version = "2", features = ["serde"] }
 io-uring = "0.7.10"
 quinn = "0.11.8"
-serde = "1.0.219"
-tokio = "1.47.1"
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.47.1", features = ["macros", "rt-multi-thread"] }
+serde_json = "1.0.143"
+url = "2.5"
+lz4_flex = "0.11.5"
+tokio-test = "0.4"
+async-trait = "0.1.89"
+uuid = { version = "1.18.0", features = ["v4"] }
+
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
