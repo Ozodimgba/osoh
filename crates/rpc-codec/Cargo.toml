@@ -14,8 +14,10 @@ async-trait = { workspace = true }
 tokio-test = { workspace = true }
 uuid = { workspace = true }
 
-[dev-dependencies]
-prost = "0.12" # Add this here for the test
+[[bench]]
+name = "codec_benchmark"
+harness = false
 
-[build-dependencies]
-prost-build = "0.12" # Add this here for the build script
+[dev-dependencies]
+prost = "0.12"
+criterion = { version = "0.5", features = ["html_reports"] }
