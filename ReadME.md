@@ -14,7 +14,7 @@ RPC Client ──── QUIC Transport ──── RPC Server
 ## Components
 
 - **rpc-codec** ✅ - Binary serialization, protocol messages, request routing
-- **rpc-transport** 🚧 - QUIC networking layer  
+- **rpc-transport** 🚧 - QUIC networking layer
 - **rpc-io** 🚧 - io_uring backend
 - **rpc-client** 🚧 - Client library
 - **rpc-server** 🚧 - Server implementation
@@ -26,7 +26,7 @@ Bincode vs Protocol Buffers:
 
 ```
 Encoding:  3.0ns vs 8.4ns  (2.8x faster)
-Decoding:  24.7ns vs 40.5ns (1.6x faster) 
+Decoding:  24.7ns vs 40.5ns (1.6x faster)
 Size:      25 vs 23 bytes   (8% larger)
 ```
 
@@ -42,7 +42,7 @@ Only `rpc-codec` is implemented. Transport, I/O, client/server still needed.
 # See working demo
 cargo test complete_rpc_flow_demo -- --nocapture
 
-# Run benchmarks  
+# Run benchmarks
 cargo bench
 ```
 
