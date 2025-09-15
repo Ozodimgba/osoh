@@ -4,8 +4,8 @@ use tokio::io::{AsyncRead, AsyncReadExt};
 
 #[derive(Debug)]
 pub struct MessageReader<R> {
-    inner: R,                            // The raw network stream
-    framer: LengthPrefixedFramer,       
+    inner: R, // The raw network stream
+    framer: LengthPrefixedFramer,
     read_buffer: [u8; 8192],             // Temporary buffer for network reads
     pending_messages: VecDeque<Vec<u8>>, // Complete messages waiting to be delivered
 }
@@ -64,5 +64,47 @@ impl<R: AsyncRead + Unpin> MessageReader<R> {
 
         // Try to read more data (would need try_read support)
         Ok(None)
+    }
+
+    /// Consume the MessageReader and return the underlying reader.
+    ///
+    /// Returns an error if there are pending messages that haven't been read,
+    /// to prevent data loss.
+    pub fn into_inner(self) -> Result<R, (Self, std::io::Error)> {
+        // Check if there are pending messages
+        if !self.pending_messages.is_empty() {
+            let error = std::io::Error::new(
+                std::io::ErrorKind::Other,
+                format!(
+                    "Cannot extract reader: {} pending messages would be lost",
+                    self.pending_messages.len()
+                ),
+            );
+            return Err((self, error));
+        }
+
+        // Check if framer has partial data
+        if self.framer.needs_more_data() && !self.framer.buffer_is_empty() {
+            let error = std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Cannot extract reader: framer has partial message data",
+            );
+            return Err((self, error));
+        }
+
+        // Safe to extract - use same pattern as MessageWriter
+        let manual_drop_self = std::mem::ManuallyDrop::new(self);
+        let inner = unsafe { std::ptr::read(&manual_drop_self.inner) };
+        Ok(inner)
+    }
+
+    pub fn can_extract_safely(&self) -> bool {
+        self.pending_messages.is_empty()
+            && (!self.framer.needs_more_data() || self.framer.buffer_is_empty())
+    }
+
+    /// Get count of pending messages that would be lost
+    pub fn pending_message_count(&self) -> usize {
+        self.pending_messages.len()
     }
 }

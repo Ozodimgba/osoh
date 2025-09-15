@@ -7,18 +7,18 @@
 
 // #![forbid(unsafe_code)]
 
+pub mod connection;
 pub mod error;
 pub mod framer;
 pub mod reader;
 pub mod traits;
 pub mod types;
-pub mod connection;
 pub mod writer;
 
+pub use connection::*;
 pub use error::*;
 pub use framer::*;
 pub use reader::*;
 pub use traits::*;
 pub use types::*;
-pub use connection::*;
 pub use writer::*;

@@ -1,34 +1,31 @@
 /// Current protocol version
 pub const PROTOCOL_VERSION: u8 = 1;
 
-/// Maximum message size (10MB)
-pub const MAX_MESSAGE_SIZE: usize = 10 * 1024 * 1024;
+/// Max message size defined in config on transport
+// pub const MAX_MESSAGE_SIZE: usize = 10 * 1024 * 1024;
 
 /// Maximum request ID (for wraparound)
 pub const MAX_REQUEST_ID: u64 = u64::MAX;
 
 /// Method IDs for all RPC methods
 pub mod method_ids {
+    use crate::define_methods;
     // Account methods
-    pub const GET_ACCOUNT_INFO: u16 = 1001;
-    pub const GET_MULTIPLE_ACCOUNTS: u16 = 1002;
-    pub const GET_BALANCE: u16 = 1003;
-
-    // Transaction methods
-    pub const SEND_TRANSACTION: u16 = 2001;
-    pub const GET_TRANSACTION: u16 = 2002;
-    pub const SIMULATE_TRANSACTION: u16 = 2003;
-
-    // Block methods
-    pub const GET_BLOCK: u16 = 3001;
-    pub const GET_BLOCK_HEIGHT: u16 = 3002;
-    pub const GET_RECENT_BLOCKHASH: u16 = 3003;
-
-    // Subscription methods
-    pub const ACCOUNT_SUBSCRIBE: u16 = 4001;
-    pub const ACCOUNT_UNSUBSCRIBE: u16 = 4002;
-    pub const PROGRAM_SUBSCRIBE: u16 = 4003;
-    pub const PROGRAM_UNSUBSCRIBE: u16 = 4004;
+    define_methods![
+        (GET_ACCOUNT_INFO, 1001),
+        (GET_MULTIPLE_ACCOUNTS, 1002),
+        (GET_BALANCE, 1003),
+        (SEND_TRANSACTION, 2001),
+        (GET_TRANSACTION, 2002),
+        (SIMULATE_TRANSACTION, 2003),
+        (GET_BLOCK, 3001),
+        (GET_BLOCK_HEIGHT, 3002),
+        (GET_RECENT_BLOCKHASH, 3003),
+        (ACCOUNT_SUBSCRIBE, 4001),
+        (ACCOUNT_UNSUBSCRIBE, 4002),
+        (PROGRAM_SUBSCRIBE, 4003),
+        (PROGRAM_UNSUBSCRIBE, 4004)
+    ]; // macro so I can check valid methods DRY-ly
 }
 
 /// Error codes

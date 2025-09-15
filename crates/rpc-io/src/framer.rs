@@ -1,6 +1,5 @@
 use bytes::BytesMut;
 
-// This is a TOOL used by other components, not the entry point
 #[derive(Debug, Clone)]
 pub struct LengthPrefixedFramer {
     state: FrameState,
@@ -17,7 +16,7 @@ impl LengthPrefixedFramer {
     pub fn new() -> Self {
         Self {
             state: FrameState::ReadingLength, // Start by reading length prefix
-            buffer: BytesMut::with_capacity(8192),          // Start with 8kb buffer
+            buffer: BytesMut::with_capacity(8192), // Start with 8kb buffer
         }
     }
 
@@ -87,14 +86,24 @@ impl LengthPrefixedFramer {
             buffer: BytesMut::with_capacity(capacity),
         }
     }
-    
+
     /// Create a framer optimized for small messages
     pub fn small_messages() -> Self {
-        Self::with_capacity(1024)  // 1KB buffer
+        Self::with_capacity(1024) // 1KB buffer
     }
-    
+
     /// Create a framer optimized for large messages  
     pub fn large_messages() -> Self {
-        Self::with_capacity(64 * 1024)  // 64KB buffer
+        Self::with_capacity(64 * 1024) // 64KB buffer
+    }
+
+    /// Check if the internal buffer is empty
+    pub fn buffer_is_empty(&self) -> bool {
+        self.buffer.is_empty()
+    }
+
+    /// Get the size of data in the internal buffer
+    pub fn buffer_len(&self) -> usize {
+        self.buffer.len()
     }
 }

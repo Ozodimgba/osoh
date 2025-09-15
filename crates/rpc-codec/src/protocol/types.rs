@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-/// A Solana public key
+/// Solana public key
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Pubkey(pub String);
 

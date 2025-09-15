@@ -1,9 +1,7 @@
 use crate::protocol::types::*;
 use serde::{Deserialize, Serialize};
 
-// ============================================================================
 // Account Methods
-// ============================================================================
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct GetAccountInfoRequest {
@@ -30,9 +28,7 @@ pub struct GetBalanceResponse {
     pub value: u64,
 }
 
-// ============================================================================
 // Transaction Methods
-// ============================================================================
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct SendTransactionRequest {

@@ -68,7 +68,7 @@ impl MessageDispatcher {
         match handler.handle_raw(raw_bytes, context).await {
             Ok(response_bytes) => {
                 // println!(
-                //     "✅ DISPATCH: Handler succeeded, returning {} bytes",
+                //     "DISPATCH: Handler succeeded, returning {} bytes",
                 //     response_bytes.len()
                 // );
                 response_bytes
@@ -90,28 +90,28 @@ impl MessageDispatcher {
         let config = bincode::config::standard().with_little_endian();
         let mut offset = 0;
 
-        // 1. Parse version (u8)
+        // Parse version (u8)
         let (version, consumed): (u8, usize) =
             bincode::serde::decode_from_slice(&raw_bytes[offset..], config).map_err(|e| {
                 RpcError::invalid_request(&format!("Failed to decode version: {}", e))
             })?;
         offset += consumed;
 
-        // 2. Parse method_id (u16)
+        // Parse method_id (u16)
         let (method_id, consumed): (u16, usize) =
             bincode::serde::decode_from_slice(&raw_bytes[offset..], config).map_err(|e| {
                 RpcError::invalid_request(&format!("Failed to decode method_id: {}", e))
             })?;
         offset += consumed;
 
-        // 3. Parse request_id (u64)
+        // Parse request_id (u64)
         let (request_id, consumed): (u64, usize) =
             bincode::serde::decode_from_slice(&raw_bytes[offset..], config).map_err(|e| {
                 RpcError::invalid_request(&format!("Failed to decode request_id: {}", e))
             })?;
         offset += consumed;
 
-        // 4. Parse message_type (MessageType enum)
+        // Parse message_type (MessageType enum)
         let (message_type, _): (MessageType, usize) =
             bincode::serde::decode_from_slice(&raw_bytes[offset..], config).map_err(|e| {
                 RpcError::invalid_request(&format!("Failed to decode message_type: {}", e))

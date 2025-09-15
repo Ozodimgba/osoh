@@ -104,19 +104,10 @@ impl RpcCodec for BincodeCodec {
             .check_size_limit(bytes.len())
             .map_err(|e| RpcError::new(RpcErrorCode::InvalidParams, e))?;
 
-        // eprintln!(
-        //     "Deserializing {} bytes: {:?}",
-        //     bytes.len(),
-        //     &bytes[..std::cmp::min(20, bytes.len())]
-        // );
-
         // Try to decode as UTF-8 to check if it's an error message
         if let Ok(text) = std::str::from_utf8(bytes) {
             if text.contains("Failed to deserialize") {
-                eprintln!(
-                    "⚠️ WARNING: Trying to deserialize an error message: {}",
-                    text
-                );
+                eprintln!("WARNING: Trying to deserialize an error message: {}", text);
                 return Err(RpcError::new(
                     RpcErrorCode::ParseError,
                     format!("Received error message instead of data: {}", text),

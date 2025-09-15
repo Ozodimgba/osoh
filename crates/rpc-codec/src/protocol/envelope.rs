@@ -1,3 +1,4 @@
+use super::traits::Zeroable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -9,7 +10,6 @@ pub struct RpcMessage<T> {
     pub payload: T,
 }
 
-// Types of messages in the RPC protocol
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum MessageType {
     Request,

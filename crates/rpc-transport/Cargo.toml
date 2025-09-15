@@ -5,7 +5,13 @@ edition = "2024"
 
 [dependencies]
 rpc-codec = { path = "../rpc-codec" }
+rpc-io = { path = "../rpc-io" }
+tokio = { workspace = true }
 quinn = { workspace = true }
 thiserror = { workspace = true }
 async-trait = { workspace = true }
 rustls = { workspace = true }
+serde = { workspace = true }
+webpki-roots = "1.0.2"
+tracing = "0.1.41"
+bincode = { workspace = true }

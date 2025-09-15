@@ -114,7 +114,7 @@ impl<C: RpcCodec> RpcCodec for PooledCodec<C> {
     where
         T: Serialize,
     {
-        // Just use the regular encoding - keep it simple
+        // Just use the regular encoding
         let result = self.inner.encode(value);
         result
     }
@@ -140,7 +140,6 @@ impl<C: RpcCodec> PooledCodec<C> {
     where
         T: Serialize,
     {
-        // This is simplified - in practice you'd use bincode's write interface
         let encoded = self.inner.encode(value)?;
         buffer.clear();
         buffer.extend_from_slice(&encoded);
@@ -207,11 +206,9 @@ impl<C: RpcCodec> BatchEncoder<C> {
     {
         self.buffer.clear();
 
-        // Write message count first
         let count = messages.len() as u32;
         self.buffer.extend_from_slice(&count.to_le_bytes());
 
-        // Encode each message with length prefix
         for message in messages {
             let encoded = self.codec.encode(message)?;
             let len = encoded.len() as u32;

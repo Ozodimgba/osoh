@@ -24,6 +24,9 @@ pub enum TransportError {
     #[error("Stream reset by peer")]
     StreamReset,
 
+    #[error("Stream error")]
+    StreamError { reason: String },
+
     // I/O errors
     #[error("Failed to send data: {reason}")]
     SendFailed { reason: String },
@@ -41,6 +44,12 @@ pub enum TransportError {
     #[error("Message too large: {size} bytes exceeds limit {limit}")]
     MessageTooLarge { size: usize, limit: usize },
 
+    #[error("I/O error: {reason}")]
+    IOError { reason: String },
+
+    #[error("Protocol error: {reason}")]
+    ProtocolError { reason: String },
+
     // Security errors
     #[error("TLS handshake failed")]
     TlsError(#[from] rustls::Error),
@@ -54,7 +63,10 @@ pub enum TransportError {
 
     // Timeout errors
     #[error("Operation timeout after {duration:?}")]
-    Timeout { duration: Duration },
+    Timeout {
+        duration: Duration,
+        operation: &'static str,
+    },
 
     // Quinn-specific errors
     #[error("QUIC connection error")]
