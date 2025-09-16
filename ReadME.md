@@ -1,5 +1,7 @@
 # OSOH: High Performance RPC Framework
 ### Outperforming gRPC with QUIC + io_uring + Bincode
+<img width="1650" height="660" alt="image" src="https://github.com/user-attachments/assets/76619c32-de81-43fe-8ee1-bfecc7bd91de" />
+
 
 **10x faster than JSON-RPC, designed to beat gRPC performance for ultra-low latency microservices.**
 
