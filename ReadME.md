@@ -32,9 +32,21 @@ Application ──── QUIC Transport ──── Microservice
 **Serialization Performance** (Bincode vs Protocol Buffers):
 
 ```
-Encoding:  3.0ns vs 8.4ns  (2.8x faster)
-Decoding:  24.7ns vs 40.5ns (1.6x faster)
-Size:      25 vs 23 bytes   (8% larger)
+Encoding:  (Bincode) 3.0ns vs (Prost) 8.4ns  (2.8x faster) 
+                               ^
+                               |
+          (on stack allocation which we can do for Slolana)
+=================================================================
+Decoding:  (Bincode) 24.7ns vs (Prost) 40.5ns (1.6x faster)
+=================================================================
+Size:      (Bincode) 25 vs (Prost) 23 bytes   (8% larger)
+=================================================================
+Bincode outperforms Prost in serialized byte size for bigger values
+When Benchmarked with Max Value: u32::MAX vs u64::MAX 
+
+Data sizes:
+  Protobuf: 31 bytes
+  Bincode:  27 bytes
 ```
 
 **Transport Advantages** (QUIC vs HTTP/2):

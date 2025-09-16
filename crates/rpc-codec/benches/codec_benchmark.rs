@@ -23,15 +23,15 @@ pub struct BincodeTestData {
 
 fn create_test_data() -> (ProtobufTestData, BincodeTestData) {
     let pb_data = ProtobufTestData {
-        id: 12345,
+        id: u32::MAX,
         name: "test_message".to_string(),
-        value: 9876543210,
+        value: u64::MAX,
     };
 
     let bc_data = BincodeTestData {
-        id: 12345,
+        id: u32::MAX,
         name: "test_message".to_string(),
-        value: 9876543210,
+        value: u64::MAX,
     };
 
     (pb_data, bc_data)
