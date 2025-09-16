@@ -9,8 +9,17 @@ members = [
     "crates/geyser-plugin",
 ]
 
+[workspace.package]
+license = "Apache-2.0"
+authors = ["FX"]
+repository = "https://github.com/Ozodimgba/osoh"
+homepage = "https://github.com/Ozodimgba/osoh"
+
+keywords = ["rpc", "quic", "performance", "blockchain", "solana"]
+categories = ["network-programming", "api-bindings", "asynchronous"]
+edition = "2021"
+
 [workspace.dependencies]
-# Shared dependencies across all crates
 bincode = { version = "2", features = ["serde"] }
 io-uring = "0.7.10"
 quinn = "0.11.8"
