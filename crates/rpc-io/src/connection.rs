@@ -265,7 +265,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tokio::io::{DuplexStream, duplex};
+    use tokio::io::DuplexStream;
 
     /// Create a pair of connected streams for testing
     fn create_test_streams() -> (DuplexStream, DuplexStream) {

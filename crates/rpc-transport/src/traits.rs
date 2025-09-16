@@ -31,7 +31,7 @@ pub trait Sendable: Send + Config {
         // Tech Debt: handle ProtocolError properly
         message
             .validate(self.config())
-            .map_err(|e| TransportError::ProtocolError {
+            .map_err(|_| TransportError::ProtocolError {
                 reason: "".to_string(),
             })?;
 

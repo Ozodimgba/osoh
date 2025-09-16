@@ -82,6 +82,9 @@ pub enum TransportError {
     #[error("Codec error")]
     CodecError(#[from] rpc_codec::RpcError),
 
+    #[error("Codec error")]
+    NoAvailableStreams,
+
     // Generic errors
     #[error("Internal error: {message}")]
     Internal { message: String },
